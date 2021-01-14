@@ -1,17 +1,50 @@
 // Selects element by class
-var timeEl = document.querySelector(".time");
-var start = document.querySelector(".startButton")
+var timeEl = document.querySelector("#time");
+var start = document.querySelector("#startButton");
 
-// creat order list
-// Create ordered list element
-var listEl = document.createElement("ol");
-// Create ordered list items
-var li1 = document.createElement("li");
-var li2 = document.createElement("li");
-var li3 = document.createElement("li");
-var li4 = document.createElement("li");
+start.addEventListener("click", function(){
+  console.log ("clicked");
+})
 
 
+
+var questionMaster=[
+  {
+    question:  "inside which HTML5?",
+    answer : "answer1",
+    option: ["answer1", "answer2", "answer3", "answer4"]
+
+
+  },
+  {
+    question:  "inside which HTML1?",
+    answer : "answer1",
+    option: ["answer1", "answer2", "answer3", "answer4"]
+
+
+  },
+  {
+    question:  "inside which HTML2?",
+    answer : "answer1",
+    option: ["answer1", "answer2", "answer3", "answer4"]
+
+
+  },
+  {
+    question:  "inside which HTML3?",
+    answer : "answer1",
+    option: ["answer1", "answer2", "answer3", "answer4"]
+
+
+  },
+  {
+    question:  "inside which HTML4?",
+    answer : "answer1",
+    option: ["answer1", "answer2", "answer3", "answer4"]
+
+
+  }
+]
 
 
 
