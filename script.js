@@ -1,9 +1,15 @@
 // Selects element by class
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#startButton");
-
+var questionDisplay=document.querySelector("#displayQuestion")
+var questionindex =0;
+var score =0;
 start.addEventListener("click", function(){
   console.log ("clicked");
+  // Show first question (displayquiz function)
+  // start quiz timer
+  // reset score
+
 })
 
 
@@ -45,13 +51,23 @@ var questionMaster=[
 
   }
 ]
+// function displayquiz
+function displayquiz(){
+var q = questionMaster[questionindex];
 
 
+}
+
+// quizscore function
 
 // pass boolean variable result 
+// Each question will have 20 seconds
+var timeLeft = 100;
+// Penalty time 10
+var penalty = 10;
 
 function quizTimer(result) {
-    var timeLeft = 10;
+    
   
     var timeInterval = setInterval(function() {
       // for each wrong answer take away 10 seconds
