@@ -1,16 +1,31 @@
 // Selects element by class
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#startButton");
-var questionDisplay=document.querySelector("#displayQuestion")
+var questionDiv=document.querySelector("#displayQuestion")
 var score = document.querySelector("#score")
+var optionList = document.querySelector("#option-list");
 var questionindex =0;
 var score =0;
+// Each question will have 20 seconds
+var timeLeft = 100;
+// Penalty time 10 seconds
+var penalty = 10;
+
+
+
+
 start.addEventListener("click", function(){
   console.log ("clicked");
-  // Show first question (displayquiz function)
   // start quiz timer
-  // reset score
+  // quizTimer();
 
+  // Show first question (displayquiz function)
+  displayquiz();
+  
+  // reset score
+  // setScore();
+  // hide startbutton
+  
 })
 
 
@@ -54,10 +69,36 @@ var questionMaster=[
 ]
 // function displayquiz
 function displayquiz(){
-var q = questionMaster[questionindex];
+  // clear data
+   questionDiv.innerHTML="";
+  //  optionList.innerHTML="";
 
+  
+  var q = questionMaster[questionindex];
+
+  var pEl= document.createElement("p");
+  pEl.textContent = q.question;
+  questionDiv.appendChild(pEl);
+console.log(pEl);
+    console.log(q.question)
+  console.log( q.option.length)
+  var ulEl = document.createElement("ul");
+  questionDiv.appendChild(ulEl);
+    for (var i = 0; i < q.option.length; i++) {
+      var choice = q.option[i];
+      var listitem = document.createElement("li");
+      listitem.textContent = choice;
+      listitem.setAttribute("data-index", i);
+      ulEl.appendChild(listitem);
+      
+      console.log( choice);
+    }
+  
 }
-
+// 
+function displayNext(){
+  
+}
 // quizscore function
 function setScore(){
   //  Updates score to client storage
@@ -80,21 +121,18 @@ function renderScore(){
     score.textContent = score;
  }
 // pass boolean variable result 
-// Each question will have 20 seconds
-var timeLeft = 100;
-// Penalty time 10
-var penalty = 10;
+
 // result
 function quizTimer() {
   
     var timeInterval = setInterval(function() {
       // for each wrong answer take away 10 seconds
-      if (result === false) {timeLeft = timeLeft-10}
-      timerEl.textContent = timeLeft + " seconds remaining";
+      // if (result === false) {timeLeft = timeLeft-10}
+      timeEl.textContent = timeLeft + " seconds remaining";
       timeLeft--;
   
       if (timeLeft === 0) {
-        timerEl.textContent = "Time's up!";
+        timeEl.textContent = "Time's up!";
         
         clearInterval(timeInterval);
       }
