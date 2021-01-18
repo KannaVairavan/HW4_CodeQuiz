@@ -3,6 +3,7 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#startButton");
 var questionDiv=document.querySelector("#displayQuestion")
 var score = document.querySelector("#score")
+var quizQuestion = document.querySelector("#quiz-question");
 var optionList = document.querySelector("#option-list");
 var questionindex =0;
 var score =0;
@@ -11,13 +12,15 @@ var timeLeft = 100;
 // Penalty time 10 seconds
 var penalty = 10;
 
+var holdtime = 5;
+
 
 
 
 start.addEventListener("click", function(){
   console.log ("clicked");
   // start quiz timer
-  // quizTimer();
+   quizTimer();
 
   // Show first question (displayquiz function)
   displayquiz();
@@ -32,21 +35,21 @@ start.addEventListener("click", function(){
 
 var questionMaster=[
   {
-    question:  "inside which HTML5?",
+    question:  "Question 1?",
     answer : "answer1",
     option: ["answer1", "answer2", "answer3", "answer4"]
 
 
   },
   {
-    question:  "inside which HTML1?",
+    question:  "question2?",
     answer : "answer1",
     option: ["answer1", "answer2", "answer3", "answer4"]
 
 
   },
   {
-    question:  "inside which HTML2?",
+    question:  "question3?",
     answer : "answer1",
     option: ["answer1", "answer2", "answer3", "answer4"]
 
@@ -68,35 +71,105 @@ var questionMaster=[
   }
 ]
 // function displayquiz
-function displayquiz(){
-  // clear data
-   questionDiv.innerHTML="";
-  //  optionList.innerHTML="";
-
+  function displayquiz(){
   
-  var q = questionMaster[questionindex];
 
-  var pEl= document.createElement("p");
-  pEl.textContent = q.question;
-  questionDiv.appendChild(pEl);
-console.log(pEl);
-    console.log(q.question)
-  console.log( q.option.length)
-  var ulEl = document.createElement("ul");
-  questionDiv.appendChild(ulEl);
-    for (var i = 0; i < q.option.length; i++) {
-      var choice = q.option[i];
-      var listitem = document.createElement("li");
-      listitem.textContent = choice;
-      listitem.setAttribute("data-index", i);
-      ulEl.appendChild(listitem);
+    // clear data
+    optionList.innerHTML="";
+    quizQuestion.innerHTML="";
+    
+      var q = questionMaster[questionindex];
+
+      console.log(q.question);
+      console.log( q.option.length);
       
-      console.log( choice);
-    }
+      quizQuestion.textContent=q.question;
+    
+
+      for (var i = 0; i < q.option.length; i++) {
+        var choice = q.option[i];
+        var listitem = document.createElement("li");
+        // listitem.textContent = choice;
+        listitem.setAttribute("data-index", i);
+        var optButton = document.createElement("button");
+
+        optButton.textContent = choice;
+        listitem.appendChild(optButton);
+        optionList.appendChild(listitem);
+        
+        
+      }
+
+      
+  }
   
+  
+  optionList.addEventListener("click", function (event) {
+    var q = questionMaster[questionindex];
+    var answer = q.answer;
+    console.log("answer ",answer);
+    // create answer div
+    
+
+    var element = event.target;
+    if (element.matches("button") === true) {
+        
+
+          if(answer === element.textContent ){
+          
+            answerDiv.textContent = "Correct!";
+            setTimeout(hideAnswer,1000);
+          } else{
+            // will deduct 10 seconds off for wrong answer
+            timeLeft = timeLeft - penalty
+            playsound();
+            // answerDiv.textContent = "Sorry, that's incorrect.";
+            setTimeout(showAnswer("Sorry, that's incorrect."),500);
+
+            
+            hideAnswer();
+
+          }
+          questionindex ++;
+          console.log("index ", questionindex);
+          console.log("question length ", questionMaster.length);
+          // check question index
+          if(questionindex >= questionMaster.length){
+            // Reset timer
+            // render result page
+            console.log("done");
+
+          }else{
+            // answerDiv.textContent="";
+
+            displayquiz()
+          }
+    }
+ 
+});
+  
+function playsound() { 
+  var audio = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'); 
+  audio.play(); 
+} 
+function showAnswer(answertext){
+  var answerDiv = document.createElement("div");
+  answerDiv.setAttribute("id", "answerDiv");
+  questionDiv.appendChild(answerDiv);
+  answerDiv.textContent = answertext;
+
 }
-// 
-function displayNext(){
+
+function hideAnswer(){
+  var divEl= document.getElementsByid("answerDiv")
+  divEl.style.display='none'
+  }
+
+function compareselection(event){
+  var element = event.target;
+  if (element.matches(li)){
+      console.log(element.textContent);
+  }
   
 }
 // quizscore function
