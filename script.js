@@ -5,16 +5,20 @@ var questionDiv=document.querySelector("#displayQuestion")
 var score = document.querySelector("#score")
 var quizQuestion = document.querySelector("#quiz-question");
 var optionList = document.querySelector("#option-list");
+var answerDiv = document.querySelector("#answer-div");
 var questionindex =0;
 var score =0;
 // Each question will have 20 seconds
-var timeLeft = 100;
+var timeLeft = 60;
 // Penalty time 10 seconds
 var penalty = 10;
 
 var holdtime = 5;
 
-
+// create answer div
+  // var answer_div = document.createElement("div");
+  // answer_div.setAttribute("id", "answerDiv");
+  // questionDiv.appendChild(answer_div);
 
 
 start.addEventListener("click", function(){
@@ -23,15 +27,20 @@ start.addEventListener("click", function(){
    quizTimer();
 
   // Show first question (displayquiz function)
-  displayquiz();
+   displayquiz();
   
   // reset score
   // setScore();
   // hide startbutton
-  
+  start.style.display="none";
 })
 
-
+function resetQuiz()
+{
+  questionindex = 0;
+  score = 0;
+    
+}
 
 var questionMaster=[
   {
@@ -107,32 +116,38 @@ var questionMaster=[
   optionList.addEventListener("click", function (event) {
     var q = questionMaster[questionindex];
     var answer = q.answer;
+    var hideDiv;
     console.log("answer ",answer);
     // create answer div
-    
-
+    var x = document.getElementById('answer-div');
+    x.style.display="block";
     var element = event.target;
     if (element.matches("button") === true) {
         
 
           if(answer === element.textContent ){
           
-            answerDiv.textContent = "Correct!";
-            setTimeout(hideAnswer,1000);
+            answerDiv.textContent="Correct!";
+           
           } else{
             // will deduct 10 seconds off for wrong answer
-            timeLeft = timeLeft - penalty
+            console.log(timeLeft);
+            timeLeft = timeLeft - penalty;
+            console.log(timeLeft);
             playsound();
-            // answerDiv.textContent = "Sorry, that's incorrect.";
-            setTimeout(showAnswer("Sorry, that's incorrect."),500);
-
-            
-            hideAnswer();
-
+            answerDiv.textContent="Sorry, that's incorrect."
+           
           }
+
+          setTimeout (function(){
+            
+            x.style.display="none";
+          },1000)
+
           questionindex ++;
           console.log("index ", questionindex);
           console.log("question length ", questionMaster.length);
+
           // check question index
           if(questionindex >= questionMaster.length){
             // Reset timer
@@ -152,17 +167,11 @@ function playsound() {
   var audio = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'); 
   audio.play(); 
 } 
-function showAnswer(answertext){
-  var answerDiv = document.createElement("div");
-  answerDiv.setAttribute("id", "answerDiv");
-  questionDiv.appendChild(answerDiv);
-  answerDiv.textContent = answertext;
 
-}
 
 function hideAnswer(){
-  var divEl= document.getElementsByid("answerDiv")
-  divEl.style.display='none'
+  var divEl= document.getElementById("#answerDiv");
+  divEl.style.display='none';
   }
 
 function compareselection(event){
@@ -199,8 +208,7 @@ function renderScore(){
 function quizTimer() {
   
     var timeInterval = setInterval(function() {
-      // for each wrong answer take away 10 seconds
-      // if (result === false) {timeLeft = timeLeft-10}
+      
       timeEl.textContent = timeLeft + " seconds remaining";
       timeLeft--;
   
