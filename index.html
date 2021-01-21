@@ -12,30 +12,51 @@
 <body>
       <header>
         <div class= "large-font">Code Quiz</div>
-        
+        <div>For each wrong answer 10 seconds will be subtracted from the timer</div>
       </header>
     <div id="container">
         <div jumbotran>
-         <div class="row">
-            
-            <div class="col-sm-12">
-              <button id="startButton">Start Quiz</button>
-            </div>
-            <div class="col-sm-12">  
-              <h1 id="time" style="text-align:center;"></h1>
-            </div>  
-            <div id= "displayQuestion"  class="col-sm-6">
-              <p id="quiz-question"></p>
-              <ul id="option-list">  </ul>    
-              <div id="answer-div" class="answerHide"></div>
+              <div class="row">
               
+                  <div class="col-sm-10">
+                    <button id="startButton">Start Quiz</button>
+                    
+                  </div>
+                  <div class="col-sm-2">
+                    <button id="start-over">Start Over</button>
+                  </div>
+              </div>
+              <div class="row">   
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-10">  
+                    <h1 id="time" style="text-align:center;"></h1>
+                  </div>  
+                  <div id= "displayQuestion"  class="col-sm-6 hide">
+                    <p id="quiz-question"></p>
+                    <ul id="option-list">  </ul>    
+                    <div id="answer-div" class="answerHide"></div>
+                  </div>
+              </div> 
+              <div class="row" id ="submit-score">
+                <div class="col-sm-12">
+                
+                  
+                    <input type="text" size = "40" placeholder="Enter you initials" name="intials" id="initial"/>
+                    <button id="submit-button">Submit Score</button>
+                      
+                  
+                </div>
+              </div>
               
-            </div>
-               
-            
-          </div>
         </div>
-     </div>
+    </div>
+         
+              
+              
+               
+                  
+              
+              
     <script src="./script.js"></script>
     
 </body>

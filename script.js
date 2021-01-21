@@ -1,12 +1,56 @@
 // Selects element by class
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#startButton");
-var questionDiv=document.querySelector("#displayQuestion")
-var score = document.querySelector("#score")
+var startOver = document.querySelector("#start-over");
+var questionDiv=document.getElementById("displayQuestion");
+
+var score = document.querySelector("#score");
 var quizQuestion = document.querySelector("#quiz-question");
 var optionList = document.querySelector("#option-list");
 var answerDiv = document.querySelector("#answer-div");
+var submitScore=document.querySelector("#submit-button");
+var submitScoreDiv = document.getElementById("submit-score");
+
+var questionMaster=[
+  {
+    question:  "Commonly Used data types DO NOT include:",
+    answer : "alerts",
+    option: ["stings", "alerts", "booleans", "numbers"]
+
+
+  },
+  {
+    question:  "What is used primarily to add styling to a web page?",
+    answer : "CSS",
+    option: ["HTML", "CSS", "Python", "React.js"]
+
+
+  },
+  {
+    question:  "How many elements can you apply an 'ID' attribute to?",
+    answer : "1",
+    option: ["As many as you want", "3", "1", "128"]
+
+
+  },
+  {
+    question:  "What javascipt method can we use to select an html element?",
+    answer : "Both 1 and 3",
+    option: ["document.queryselector()", "document.getElementChild", "document.getElementById", "Both 1 and 3"]
+
+
+  },
+  {
+    question:  "What HTML attribute references an external JavaScript file?",
+    answer : "src",
+    option: ["href", "src", "class", "index"]
+
+
+  }
+]
+
 var questionindex =0;
+var finalQuestionIndex = questionMaster.length;
 var score =0;
 // Each question will have 20 seconds
 var timeLeft = 60;
@@ -15,6 +59,8 @@ var penalty = 10;
 
 var holdtime = 5;
 
+
+startOver.style.display="none";
 // create answer div
   // var answer_div = document.createElement("div");
   // answer_div.setAttribute("id", "answerDiv");
@@ -23,9 +69,14 @@ var holdtime = 5;
 
 start.addEventListener("click", function(){
   console.log ("clicked");
+  submitScoreDiv.style.display = "none";
+  // check questionindex
+  if (questionindex === finalQuestionIndex){
+    return showScore();
+  } 
   // start quiz timer
    quizTimer();
-
+   
   // Show first question (displayquiz function)
    displayquiz();
   
@@ -33,6 +84,7 @@ start.addEventListener("click", function(){
   // setScore();
   // hide startbutton
   start.style.display="none";
+  startOver.style.display="block";
 })
 
 function resetQuiz()
@@ -42,43 +94,7 @@ function resetQuiz()
     
 }
 
-var questionMaster=[
-  {
-    question:  "Question 1?",
-    answer : "answer1",
-    option: ["answer1", "answer2", "answer3", "answer4"]
 
-
-  },
-  {
-    question:  "question2?",
-    answer : "answer1",
-    option: ["answer1", "answer2", "answer3", "answer4"]
-
-
-  },
-  {
-    question:  "question3?",
-    answer : "answer1",
-    option: ["answer1", "answer2", "answer3", "answer4"]
-
-
-  },
-  {
-    question:  "inside which HTML3?",
-    answer : "answer1",
-    option: ["answer1", "answer2", "answer3", "answer4"]
-
-
-  },
-  {
-    question:  "inside which HTML4?",
-    answer : "answer1",
-    option: ["answer1", "answer2", "answer3", "answer4"]
-
-
-  }
-]
 // function displayquiz
   function displayquiz(){
   
@@ -123,8 +139,7 @@ var questionMaster=[
     x.style.display="block";
     var element = event.target;
     if (element.matches("button") === true) {
-        
-
+ 
           if(answer === element.textContent ){
           
             answerDiv.textContent="Correct!";
@@ -153,7 +168,10 @@ var questionMaster=[
             // Reset timer
             // render result page
             console.log("done");
+            
 
+            // scoreSectionEl.style.display="block";
+            showScore();
           }else{
             // answerDiv.textContent="";
 
@@ -168,19 +186,15 @@ function playsound() {
   audio.play(); 
 } 
 
-
-function hideAnswer(){
-  var divEl= document.getElementById("#answerDiv");
-  divEl.style.display='none';
-  }
-
-function compareselection(event){
-  var element = event.target;
-  if (element.matches(li)){
-      console.log(element.textContent);
-  }
+function showScore(){
   
+    questionDiv.style.display = "none"
+    submitScoreDiv.style.display = "block";
+    clearInterval(timerInterval);
+    
 }
+
+    
 // quizscore function
 function setScore(){
   //  Updates score to client storage
@@ -212,10 +226,12 @@ function quizTimer() {
       timeEl.textContent = timeLeft + " seconds remaining";
       timeLeft--;
   
-      if (timeLeft === 0) {
+      if (timeLeft <= 0) {
         timeEl.textContent = "Time's up!";
         
-        clearInterval(timeInterval);
+        
+        clearInterval(timerInterval);
+        showScore();
       }
   
     }, 1000);

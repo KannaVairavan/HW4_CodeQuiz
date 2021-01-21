@@ -20,7 +20,7 @@ header {
   text-align: center;
 }
 
-.timer {
+.time {
   height: 240px;
   padding: 10px;
   background: #13293d;
@@ -28,9 +28,6 @@ header {
   text-align: center;
 }
 
-.timer-text {
-  padding: 55px;
-}
 ul {
   list-style-type: none;
   padding: 0;
@@ -59,4 +56,14 @@ li button {
 
 li button:hover {
   background-color: #f15dfe;
+}
+.hidediv {
+  display: none;
+}
+
+.showdiv {
+  display: block;
+}
+#score-section {
+  text-align: center;
 }
