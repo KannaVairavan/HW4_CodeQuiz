@@ -15,6 +15,10 @@ then timer starts and user will be presented with a question
 
 ![ScreenShot](./assets/question.PNG)
 
+For wrong answer time is subtracted from the clock
+at the end of the quiz application will ask for user initial
+![ScreenShot](./assets/Initial.PNG)
+
 ## Link
 
 ## Repository

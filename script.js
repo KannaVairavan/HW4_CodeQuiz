@@ -8,8 +8,9 @@ var score = document.querySelector("#score");
 var quizQuestion = document.querySelector("#quiz-question");
 var optionList = document.querySelector("#option-list");
 var answerDiv = document.querySelector("#answer-div");
-var submitScore=document.querySelector("#submit-button");
+var submitScore=document.getElementById("submit-button");
 var submitScoreDiv = document.getElementById("submit-score");
+var scoreInputName = document.getElementById("initial");
 
 var questionMaster=[
   {
@@ -143,7 +144,7 @@ function resetQuiz()
           if(answer === element.textContent ){
           
             answerDiv.textContent="Correct!";
-           
+            score= score + 1
           } else{
             // will deduct 10 seconds off for wrong answer
             console.log(timeLeft);
@@ -190,11 +191,35 @@ function showScore(){
   
     questionDiv.style.display = "none"
     submitScoreDiv.style.display = "block";
-    clearInterval(timerInterval);
+    clearInterval(timeInterval);
     
 }
 
+
+submitScore.addEventListener("click", function highscore(){
     
+    
+      if(scoreInputName.value === "") {
+          alert("Initials cannot be blank");
+          return false;
+      } else {
+      
+          var currentUser = scoreInputName.value.trim();
+          var currentscore = {
+              name : currentUser,
+              score : score
+          };
+          var savedScores = JSON.parse(localStorage.getItem("savedScores")) || [];
+          submitScoreDiv.style.display = "none";
+      
+      
+          savedScores.push(currentscore);
+          localStorage.setItem("savedScores", JSON.stringify(savedScores));
+      }
+    })
+
+  
+
 // quizscore function
 function setScore(){
   //  Updates score to client storage
@@ -222,17 +247,14 @@ function renderScore(){
 function quizTimer() {
   
     var timeInterval = setInterval(function() {
-      
       timeEl.textContent = timeLeft + " seconds remaining";
       timeLeft--;
   
-      if (timeLeft <= 0) {
-        timeEl.textContent = "Time's up!";
-        
-        
-        clearInterval(timerInterval);
-        showScore();
-      }
+        if (timeLeft <= 0) {
+          timeEl.textContent = "Time's up!";
+          clearInterval(timeInterval);
+          showScore();
+        }
   
     }, 1000);
   }
