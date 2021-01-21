@@ -15,13 +15,17 @@ then timer starts and user will be presented with a question
 
 ![ScreenShot](./assets/question.PNG)
 
-For wrong answer time is subtracted from the clock
-at the end of the quiz application will ask for user initial
+For wrong answer time is subtracted from the clock.
+at the end of the quiz application will ask for user initial save it local storage.
 ![ScreenShot](./assets/Initial.PNG)
 
 ## Link
 
+https://kannavairavan.github.io/HW4_CodeQuiz/
+
 ## Repository
+
+https://github.com/KannaVairavan/HW4_CodeQuiz.git
 
 ## Technologies
 
