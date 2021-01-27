@@ -59,9 +59,22 @@ var timeLeft = 60;
 var penalty = 10;
 
 var holdtime = 5;
+var count =0;
+var clear;
 
-
+submitScoreDiv.style.display = "none";
 startOver.style.display="none";
+function countVal(){
+  count ++;
+  
+  timeEl.textContent = timeLeft + " seconds remaining";
+  timeLeft--;
+  if (timeLeft <= 0) {
+    timeEl.textContent = "Time's up!";
+    clearInterval(clear);
+    showScore();
+  }
+}
 // create answer div
   // var answer_div = document.createElement("div");
   // answer_div.setAttribute("id", "answerDiv");
@@ -76,8 +89,8 @@ start.addEventListener("click", function(){
     return showScore();
   } 
   // start quiz timer
-   quizTimer();
-   
+  //  quizTimer();
+  clear = setInterval((countVal) , 1000);
   // Show first question (displayquiz function)
    displayquiz();
   
@@ -170,8 +183,9 @@ function resetQuiz()
             // render result page
             console.log("done");
             
-
+            // timeEl.style.display="none";
             // scoreSectionEl.style.display="block";
+            clearInterval(clear);
             showScore();
           }else{
             // answerDiv.textContent="";
@@ -191,7 +205,7 @@ function showScore(){
   
     questionDiv.style.display = "none"
     submitScoreDiv.style.display = "block";
-    clearInterval(timeInterval);
+    clearInterval(clear);
     
 }
 
@@ -209,12 +223,12 @@ submitScore.addEventListener("click", function highscore(){
               name : currentUser,
               score : score
           };
-          var savedScores = JSON.parse(localStorage.getItem("savedScores")) || [];
+          
           submitScoreDiv.style.display = "none";
-      
-      
-          savedScores.push(currentscore);
-          localStorage.setItem("savedScores", JSON.stringify(savedScores));
+          localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+          
+
       }
     })
 
@@ -242,7 +256,13 @@ function renderScore(){
     score.textContent = score;
  }
 // pass boolean variable result 
+// clear timer
+function cleartimer(){
+  var timeInterval = setInterval(function() {
+    clearInterval(timeInterval);
+  }, 1000);
 
+}
 // result
 function quizTimer() {
   
