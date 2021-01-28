@@ -17,7 +17,10 @@ then timer starts and user will be presented with a question
 
 For wrong answer time is subtracted from the clock.
 at the end of the quiz application will ask for user initial save it local storage.
-![ScreenShot](./assets/Initial.PNG)
+![ScreenShot](./assets/initial.PNG)
+
+High score will be displayed at the end of the game
+![High Score](./assets/5_highscore.PNG)
 
 ## Link
 
