@@ -8,11 +8,11 @@ body {
   font-size: 16px;
 }
 header {
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   background: peru;
   color: white;
-  border-bottom: 20px #879274;
+  border-bottom: 10px #879274;
 }
 
 .large-font {
