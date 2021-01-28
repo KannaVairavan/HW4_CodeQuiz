@@ -11,7 +11,9 @@ var answerDiv = document.querySelector("#answer-div");
 var submitScore=document.getElementById("submit-button");
 var submitScoreDiv = document.getElementById("submit-score");
 var scoreInputName = document.getElementById("initial");
-
+var highScorediv = document.getElementById("high-score");
+var renderScoreInputName = document.getElementById("render-score");
+var clearLocalStorage=document.getElementById("clear-score")
 var questionMaster=[
   {
     question:  "Commonly Used data types DO NOT include:",
@@ -61,9 +63,10 @@ var penalty = 10;
 var holdtime = 5;
 var count =0;
 var clear;
-
+// hide Div
 submitScoreDiv.style.display = "none";
-startOver.style.display="none";
+highScorediv.style.display="none";
+
 function countVal(){
   count ++;
   
@@ -84,6 +87,7 @@ function countVal(){
 start.addEventListener("click", function(){
   console.log ("clicked");
   submitScoreDiv.style.display = "none";
+  questionDiv.style.display = "block"
   // check questionindex
   if (questionindex === finalQuestionIndex){
     return showScore();
@@ -98,14 +102,21 @@ start.addEventListener("click", function(){
   // setScore();
   // hide startbutton
   start.style.display="none";
-  startOver.style.display="block";
+  
 })
 
 function resetQuiz()
 {
   questionindex = 0;
   score = 0;
-    
+  renderScoreInputName.innerHTML="";
+  scoreInputName.value="";
+  timeLeft=60;
+  clearInterval(clear);
+  start.style.display="block";
+  submitScoreDiv.style.display = "none";
+  highScorediv.style.display="none";
+  timeEl.textContent="";
 }
 
 
@@ -157,7 +168,7 @@ function resetQuiz()
           if(answer === element.textContent ){
           
             answerDiv.textContent="Correct!";
-            score= score + 1
+            score= score + 10
           } else{
             // will deduct 10 seconds off for wrong answer
             console.log(timeLeft);
@@ -185,6 +196,8 @@ function resetQuiz()
             
             // timeEl.style.display="none";
             // scoreSectionEl.style.display="block";
+            
+            timeEl.textContent="Game Over";
             clearInterval(clear);
             showScore();
           }else{
@@ -206,11 +219,11 @@ function showScore(){
     questionDiv.style.display = "none"
     submitScoreDiv.style.display = "block";
     clearInterval(clear);
-    
+    console.log (score);
 }
 
 
-submitScore.addEventListener("click", function highscore(){
+submitScore.addEventListener("click", function(){
     
     
       if(scoreInputName.value === "") {
@@ -219,62 +232,58 @@ submitScore.addEventListener("click", function highscore(){
       } else {
       
           var currentUser = scoreInputName.value.trim();
-          var currentscore = {
+          console.log(score);
+          var currentUser = {
               name : currentUser,
               score : score
           };
-          
+          var highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
+          // push object into score array
+          highScores.push(currentUser)
           submitScoreDiv.style.display = "none";
-          localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-          
+          // save to local storage
+          localStorage.setItem("highScores", JSON.stringify(highScores));
+          // display high score
+          highScorediv.style.display="block";
+          HighScore()
 
       }
-    })
-
-  
-
-// quizscore function
-function setScore(){
-  //  Updates score to client storage
-  localStorage.setItem("score", score);
-
-}
-
-function renderScore(){
-  
-    // Get stored value from client storage, if it exists
-    var quizScore = localStorage.getItem("score");
-    // If stored value doesn't exist, set counter to 0
-    if (quizScore === null) {
-      score = 0;
-    } else {
-      // If a value is retrieved from client storage set the score to that value
-      score = quizScore;
+})
+var highscoreArray=[];
+function HighScore(){
+var high =0;
+if(localStorage.highScores){
+  highscoreArray=JSON.parse(localStorage.highScores);
+  console.log("local length", highscoreArray.length);
+  for(var i=0; i < highscoreArray.length; i++ ){
+      var lsscore=highscoreArray[i].score;
+      if (lsscore >= high){
+        high=lsscore;
+        var lsname=highscoreArray[i].name;
+      }
+     
     }
-    //Render score  to page
-    score.textContent = score;
- }
-// pass boolean variable result 
-// clear timer
-function cleartimer(){
-  var timeInterval = setInterval(function() {
-    clearInterval(timeInterval);
-  }, 1000);
+    renderScoreInputName.innerHTML= lsname + "-" + high ;
+    console.log(high);
+  }
 
 }
-// result
-function quizTimer() {
+
+
+
+startOver.addEventListener("click", function(){
+  resetQuiz();
+} )
+// clear local storage
+clearLocalStorage.addEventListener("click", function(){
+  highScoresArray=[];
+  localStorage.setItem('highScores', JSON.stringify(highScoresArray));
+})
+
+    
+
   
-    var timeInterval = setInterval(function() {
-      timeEl.textContent = timeLeft + " seconds remaining";
-      timeLeft--;
-  
-        if (timeLeft <= 0) {
-          timeEl.textContent = "Time's up!";
-          clearInterval(timeInterval);
-          showScore();
-        }
-  
-    }, 1000);
-  }
+
+
+
+
