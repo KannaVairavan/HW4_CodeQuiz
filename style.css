@@ -20,9 +20,9 @@ header {
   text-align: center;
 }
 
-.time {
-  height: 240px;
-  padding: 10px;
+#time {
+  height: 55px;
+
   background: #13293d;
   color: #fff;
   text-align: center;
