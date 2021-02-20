@@ -9,18 +9,18 @@ This project emphasizes the use of using Javascript to make dynamic changes to a
 
 When start button is clicked
 
-![ScreenShot](./assets/start.PNG)
+![ScreenShot](./assets/images/start.PNG)
 
 then timer starts and user will be presented with a question
 
-![ScreenShot](./assets/question.PNG)
+![ScreenShot](./assets/images/question.PNG)
 
 For wrong answer time is subtracted from the clock.
 at the end of the quiz application will ask for user initial save it local storage.
-![ScreenShot](./assets/initial.PNG)
+![ScreenShot](./assets/images/initial.PNG)
 
 High score will be displayed at the end of the game
-![High Score](./assets/5_highscore.PNG)
+![High Score](./assets/images/5_highscore.PNG)
 
 ## Link
 
