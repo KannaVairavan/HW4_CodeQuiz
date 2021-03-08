@@ -33,6 +33,30 @@ ul {
   padding: 0;
   background-color: white;
 }
+#start-over {
+  background-color: #13293d;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 3px 2px;
+  cursor: pointer;
+}
+#clear-score {
+  background-color: #13293d;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  float: left;
+  font-size: 16px;
+  margin: 3px 2px;
+  cursor: pointer;
+}
 
 li {
   height: 40px;

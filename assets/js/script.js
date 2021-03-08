@@ -3,7 +3,6 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#startButton");
 var startOver = document.querySelector("#start-over");
 var questionDiv=document.getElementById("displayQuestion");
-
 var score = document.querySelector("#score");
 var quizQuestion = document.querySelector("#quiz-question");
 var optionList = document.querySelector("#option-list");
@@ -98,9 +97,11 @@ start.addEventListener("click", function(){
   // Show first question (displayquiz function)
    displayquiz();
   
+  clearLocalStorage.style.display="block";
   // reset score
   // setScore();
   // hide startbutton
+  
   start.style.display="none";
   
 })
@@ -220,6 +221,7 @@ function showScore(){
     submitScoreDiv.style.display = "block";
     clearInterval(clear);
     console.log (score);
+
 }
 
 
@@ -233,10 +235,12 @@ submitScore.addEventListener("click", function(){
       
           var currentUser = scoreInputName.value.trim();
           console.log(score);
+
           var currentUser = {
               name : currentUser,
               score : score
           };
+
           var highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
           // push object into score array
           highScores.push(currentUser)
@@ -252,6 +256,7 @@ submitScore.addEventListener("click", function(){
 var highscoreArray=[];
 function HighScore(){
 var high =0;
+var lsname="";
 if(localStorage.highScores){
   highscoreArray=JSON.parse(localStorage.highScores);
   console.log("local length", highscoreArray.length);
@@ -259,14 +264,16 @@ if(localStorage.highScores){
       var lsscore=highscoreArray[i].score;
       if (lsscore >= high){
         high=lsscore;
-        var lsname=highscoreArray[i].name;
+        lsname = lsname + " " + highscoreArray[i].name;
+        console.log("lsname ",lsname);
       }
      
     }
-    renderScoreInputName.innerHTML= lsname + "-" + high ;
+    
+    renderScoreInputName.textContent = lsname + "-" + high ;
     console.log(high);
+    
   }
-
 }
 
 
@@ -278,6 +285,9 @@ startOver.addEventListener("click", function(){
 clearLocalStorage.addEventListener("click", function(){
   highScoresArray=[];
   localStorage.setItem('highScores', JSON.stringify(highScoresArray));
+  clearLocalStorage.style.display="none";
+  
+
 })
 
     
